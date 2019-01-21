@@ -1,0 +1,24 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /test.log
+  fields:
+    log_topic: kafkatopic1
+
+processors:
+  - drop_fields:
+      fields: ["@metadata","beat","prospector","input"]
+
+#======================================================================
+output.kafka:
+  enable: true
+  hosts: ["77.77.77.77:9092"]
+  topic: '%{[fields.log_topic]}'
+  partition.round_robin:
+    reachable_only: false
+  required_acks: 1
+  compression: gzip
+  max_message_bytes: 1000000
+  codec.format:
+    string: '%{[message]}'

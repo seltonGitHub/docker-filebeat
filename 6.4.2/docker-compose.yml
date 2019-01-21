@@ -1,0 +1,10 @@
+version: '2'
+services:
+  Filebeat:
+    build: ./
+    image: selton/filebeat:6.4.2
+    container_name: filebeat
+    volumes:
+      - /Users/zyfselton/Docker/github/filebeat/6.4.2/test.log:/test.log
+      - /Users/zyfselton/Docker/github/filebeat/6.4.2/filebeat.yml:/filebeat.yml
+    tty: true
